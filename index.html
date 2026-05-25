@@ -82,8 +82,8 @@ body{
       </p>
 
       <button
-        onclick="agregarCuenta('Cóctel de Camarón',120)"
-        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl"
+        onclick="agregarCuenta('Cóctel de Camarón',120,this)"
+        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl transition-all"
       >
         Agregar
       </button>
@@ -108,8 +108,8 @@ body{
       </p>
 
       <button
-        onclick="agregarCuenta('Cóctel de Pulpo',150)"
-        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl"
+        onclick="agregarCuenta('Cóctel de Pulpo',150,this)"
+        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl transition-all"
       >
         Agregar
       </button>
@@ -134,8 +134,8 @@ body{
       </p>
 
       <button
-        onclick="agregarCuenta('Vuelve a la Vida',180)"
-        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl"
+        onclick="agregarCuenta('Vuelve a la Vida',180,this)"
+        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl transition-all"
       >
         Agregar
       </button>
@@ -160,8 +160,8 @@ body{
       </p>
 
       <button
-        onclick="agregarCuenta('Tostada de Camarón',70)"
-        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl"
+        onclick="agregarCuenta('Tostada de Camarón',70,this)"
+        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl transition-all"
       >
         Agregar
       </button>
@@ -186,8 +186,8 @@ body{
       </p>
 
       <button
-        onclick="agregarCuenta('Ceviche Tropical',140)"
-        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl"
+        onclick="agregarCuenta('Ceviche Tropical',140,this)"
+        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl transition-all"
       >
         Agregar
       </button>
@@ -211,8 +211,8 @@ body{
       </p>
 
       <button
-        onclick="agregarCuenta('Michelada con Camarón',130)"
-        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl"
+        onclick="agregarCuenta('Michelada con Camarón',130,this)"
+        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl transition-all"
       >
         Agregar
       </button>
@@ -261,6 +261,29 @@ body{
 
 </div>
 
+<style>
+  #toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #16a34a;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    transition: transform 0.4s ease;
+    z-index: 999;
+  }
+  #toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+
+<div id="toast">✅ ¡Pedido enviado!</div>
+
 <script>
 
 let cuenta = [];
@@ -268,186 +291,117 @@ let total = 0;
 let turno = 1;
 
 function mostrarCliente(){
-
   document.getElementById('cliente').classList.remove('hidden');
   document.getElementById('cocina').classList.add('hidden');
-
 }
 
 function mostrarCocina(){
-
   document.getElementById('cocina').classList.remove('hidden');
   document.getElementById('cliente').classList.add('hidden');
-
 }
 
-function agregarCuenta(nombre,precio){
-
-  cuenta.push({
-    nombre,
-    precio
-  });
-
+function agregarCuenta(nombre, precio, btn){
+  cuenta.push({ nombre, precio });
   total += precio;
-
   actualizarCuenta();
 
+  // Feedback "¡Agregado!"
+  const original = btn.innerText;
+  btn.innerText = '✅ ¡Agregado!';
+  btn.classList.remove('bg-cyan-600','hover:bg-cyan-700');
+  btn.classList.add('bg-green-500');
+  setTimeout(() => {
+    btn.innerText = original;
+    btn.classList.add('bg-cyan-600','hover:bg-cyan-700');
+    btn.classList.remove('bg-green-500');
+  }, 1200);
+}
+
+function eliminarItem(index){
+  total -= cuenta[index].precio;
+  cuenta.splice(index, 1);
+  actualizarCuenta();
 }
 
 function actualizarCuenta(){
-
-  const contenedor =
-  document.getElementById('cuenta');
-
+  const contenedor = document.getElementById('cuenta');
   contenedor.innerHTML = '';
 
-  cuenta.forEach((item)=>{
-
+  cuenta.forEach((item, index) => {
     contenedor.innerHTML += `
-      <div class="
-        flex
-        justify-between
-        bg-gray-100
-        p-3
-        rounded-xl
-      ">
-
-        <span>
-          ${item.nombre}
-        </span>
-
-        <span class="font-bold">
-          $${item.precio}
-        </span>
-
+      <div class="flex justify-between items-center bg-gray-100 p-3 rounded-xl">
+        <span>${item.nombre}</span>
+        <div class="flex items-center gap-3">
+          <span class="font-bold">$${item.precio}</span>
+          <button
+            onclick="eliminarItem(${index})"
+            class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-xl text-sm"
+          >
+            🗑 Quitar
+          </button>
+        </div>
       </div>
     `;
-
   });
 
   document.getElementById('total').innerText = total;
+}
 
+function mostrarToast(msg){
+  const toast = document.getElementById('toast');
+  toast.innerText = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
 function enviarPedido(){
-
   if(cuenta.length === 0){
-
-    alert('Agrega algo al pedido');
-
+    mostrarToast('⚠️ Agrega algo al pedido');
     return;
-
   }
 
-  const pedidos =
-  document.getElementById('pedidos');
-
+  const pedidos = document.getElementById('pedidos');
   let lista = '';
-
-  cuenta.forEach((item)=>{
-
-    lista += `
-      <li>
-        ${item.nombre} - $${item.precio}
-      </li>
-    `;
-
+  cuenta.forEach((item) => {
+    lista += `<li>${item.nombre} - $${item.precio}</li>`;
   });
 
   const pedido = document.createElement('div');
-
-  pedido.className =
-  'bg-white p-6 rounded-3xl shadow-xl border-l-8 border-cyan-600';
-
+  pedido.className = 'bg-white p-6 rounded-3xl shadow-xl border-l-8 border-cyan-600';
   pedido.innerHTML = `
-
     <div class="flex justify-between items-center">
-
       <div>
-
-        <h3 class="text-3xl font-bold">
-          Turno #${turno}
-        </h3>
-
-        <ul class="mt-4 list-disc ml-6 text-lg">
-          ${lista}
-        </ul>
-
-        <p class="text-2xl font-bold text-green-700 mt-5">
-          Total: $${total}
-        </p>
-
-        <p class="mt-4 text-yellow-600 font-bold text-xl estado">
-          ⏳ Pendiente
-        </p>
-
+        <h3 class="text-3xl font-bold">Turno #${turno}</h3>
+        <ul class="mt-4 list-disc ml-6 text-lg">${lista}</ul>
+        <p class="text-2xl font-bold text-green-700 mt-5">Total: $${total}</p>
+        <p class="mt-4 text-yellow-600 font-bold text-xl estado">⏳ Pendiente</p>
       </div>
-
       <div class="space-y-3">
-
-        <button
-          onclick="preparando(this)"
-          class="bg-yellow-500 text-white px-5 py-3 rounded-2xl"
-        >
-          Preparando
-        </button>
-
-        <button
-          onclick="entregado(this)"
-          class="bg-green-600 text-white px-5 py-3 rounded-2xl"
-        >
-          Entregado
-        </button>
-
+        <button onclick="preparando(this)" class="bg-yellow-500 text-white px-5 py-3 rounded-2xl">Preparando</button>
+        <button onclick="entregado(this)" class="bg-green-600 text-white px-5 py-3 rounded-2xl">Entregado</button>
       </div>
-
     </div>
-
   `;
 
   pedidos.prepend(pedido);
-
-  alert(
-    '✅ Pedido enviado\\n\\nTurno #' + turno
-  );
+  mostrarToast('✅ ¡Pedido enviado! Turno #' + turno);
 
   turno++;
-
   cuenta = [];
   total = 0;
-
   actualizarCuenta();
-
 }
 
 function preparando(btn){
-
-  const card = btn.closest('.border-l-8');
-
-  const estado =
-  card.querySelector('.estado');
-
-  estado.innerHTML =
-  '👨‍🍳 Preparando';
-
-  estado.className =
-  'mt-4 text-blue-600 font-bold text-xl estado';
-
+  const estado = btn.closest('.border-l-8').querySelector('.estado');
+  estado.innerHTML = '👨‍🍳 Preparando';
+  estado.className = 'mt-4 text-blue-600 font-bold text-xl estado';
 }
 
 function entregado(btn){
-
-  const card = btn.closest('.border-l-8');
-
-  const estado =
-  card.querySelector('.estado');
-
-  estado.innerHTML =
-  '✅ Entregado';
-
-  estado.className =
-  'mt-4 text-green-600 font-bold text-xl estado';
-
+  const estado = btn.closest('.border-l-8').querySelector('.estado');
+  estado.innerHTML = '✅ Entregado';
+  estado.className = 'mt-4 text-green-600 font-bold text-xl estado';
 }
 
 </script>
