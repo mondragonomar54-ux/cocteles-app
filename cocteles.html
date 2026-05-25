@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mariscos & Cócteles</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+body{
+  background:#f3f4f6;
+}
+
+.hidden{
+  display:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="bg-cyan-700 text-white p-5 shadow-xl">
+
+  <h1 class="text-4xl font-bold text-center">
+    🦐 Mariscos & Cócteles
+  </h1>
+
+</div>
+
+<!-- BOTONES -->
+
+<div class="flex justify-center gap-4 mt-6">
+
+  <button
+    onclick="mostrarCliente()"
+    class="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-3 rounded-2xl text-xl"
+  >
+    🍸 Cliente
+  </button>
+
+  <button
+    onclick="mostrarCocina()"
+    class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-2xl text-xl"
+  >
+    👨‍🍳 Cocina / Meseros
+  </button>
+
+</div>
+
+<!-- CLIENTE -->
+
+<div id="cliente" class="max-w-6xl mx-auto mt-8">
+
+  <h2 class="text-3xl font-bold mb-6 text-cyan-700">
+    📋 Menú
+  </h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+    <!-- ITEM -->
+
+    <div class="bg-white p-5 rounded-3xl shadow-xl">
+
+      <h3 class="text-2xl font-bold">
+        🍤 Cóctel de Camarón
+      </h3>
+
+      <p class="mt-3 text-gray-600">
+        Camarón, jitomate, cebolla, cilantro,
+        aguacate y chispitas.
+      </p>
+
+      <p class="text-2xl font-bold text-cyan-700 mt-4">
+        $120
+      </p>
+
+      <button
+        onclick="agregarCuenta('Cóctel de Camarón',120)"
+        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl"
+      >
+        Agregar
+      </button>
+
+    </div>
+
+    <!-- ITEM -->
+
+    <div class="bg-white p-5 rounded-3xl shadow-xl">
+
+      <h3 class="text-2xl font-bold">
+        🐙 Cóctel de Pulpo
+      </h3>
+
+      <p class="mt-3 text-gray-600">
+        Camarón, pulpo, jitomate,
+        cebolla y cilantro.
+      </p>
+
+      <p class="text-2xl font-bold text-cyan-700 mt-4">
+        $150
+      </p>
+
+      <button
+        onclick="agregarCuenta('Cóctel de Pulpo',150)"
+        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl"
+      >
+        Agregar
+      </button>
+
+    </div>
+
+    <!-- ITEM -->
+
+    <div class="bg-white p-5 rounded-3xl shadow-xl">
+
+      <h3 class="text-2xl font-bold">
+        🔥 Vuelve a la Vida
+      </h3>
+
+      <p class="mt-3 text-gray-600">
+        Camarón, pulpo, ostión,
+        jitomate y aguacate.
+      </p>
+
+      <p class="text-2xl font-bold text-cyan-700 mt-4">
+        $180
+      </p>
+
+      <button
+        onclick="agregarCuenta('Vuelve a la Vida',180)"
+        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl"
+      >
+        Agregar
+      </button>
+
+    </div>
+
+    <!-- ITEM -->
+
+    <div class="bg-white p-5 rounded-3xl shadow-xl">
+
+      <h3 class="text-2xl font-bold">
+        🌮 Tostada de Camarón
+      </h3>
+
+      <p class="mt-3 text-gray-600">
+        Camarón, jitomate, cebolla,
+        cilantro y aguacate.
+      </p>
+
+      <p class="text-2xl font-bold text-cyan-700 mt-4">
+        $70
+      </p>
+
+      <button
+        onclick="agregarCuenta('Tostada de Camarón',70)"
+        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl"
+      >
+        Agregar
+      </button>
+
+    </div>
+
+    <!-- ITEM -->
+
+    <div class="bg-white p-5 rounded-3xl shadow-xl">
+
+      <h3 class="text-2xl font-bold">
+        🥭 Ceviche Tropical
+      </h3>
+
+      <p class="mt-3 text-gray-600">
+        Mango, camarón, pepino,
+        cilantro y limón.
+      </p>
+
+      <p class="text-2xl font-bold text-cyan-700 mt-4">
+        $140
+      </p>
+
+      <button
+        onclick="agregarCuenta('Ceviche Tropical',140)"
+        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl"
+      >
+        Agregar
+      </button>
+
+    </div>
+
+    <!-- ITEM -->
+
+    <div class="bg-white p-5 rounded-3xl shadow-xl">
+
+      <h3 class="text-2xl font-bold">
+        🍺 Michelada con Camarón
+      </h3>
+
+      <p class="mt-3 text-gray-600">
+        Cerveza preparada con camarón.
+      </p>
+
+      <p class="text-2xl font-bold text-cyan-700 mt-4">
+        $130
+      </p>
+
+      <button
+        onclick="agregarCuenta('Michelada con Camarón',130)"
+        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-2xl"
+      >
+        Agregar
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- CUENTA -->
+
+  <div class="bg-white rounded-3xl shadow-xl p-6 mt-8">
+
+    <h2 class="text-3xl font-bold text-green-700">
+      🧾 Tu Cuenta
+    </h2>
+
+    <div id="cuenta" class="mt-5 space-y-3"></div>
+
+    <h3 class="text-3xl font-bold mt-6">
+      Total: $
+      <span id="total">
+        0
+      </span>
+    </h3>
+
+    <button
+      onclick="enviarPedido()"
+      class="mt-6 bg-green-600 hover:bg-green-700 text-white px-6 py-4 rounded-2xl text-xl w-full"
+    >
+      ✅ Enviar Pedido
+    </button>
+
+  </div>
+
+</div>
+
+<!-- COCINA -->
+
+<div id="cocina" class="hidden max-w-5xl mx-auto mt-8">
+
+  <h2 class="text-4xl font-bold text-pink-700 mb-6">
+    👨‍🍳 Pedidos
+  </h2>
+
+  <div id="pedidos" class="space-y-5"></div>
+
+</div>
+
+<script>
+
+let cuenta = [];
+let total = 0;
+let turno = 1;
+
+function mostrarCliente(){
+
+  document.getElementById('cliente').classList.remove('hidden');
+  document.getElementById('cocina').classList.add('hidden');
+
+}
+
+function mostrarCocina(){
+
+  document.getElementById('cocina').classList.remove('hidden');
+  document.getElementById('cliente').classList.add('hidden');
+
+}
+
+function agregarCuenta(nombre,precio){
+
+  cuenta.push({
+    nombre,
+    precio
+  });
+
+  total += precio;
+
+  actualizarCuenta();
+
+}
+
+function actualizarCuenta(){
+
+  const contenedor =
+  document.getElementById('cuenta');
+
+  contenedor.innerHTML = '';
+
+  cuenta.forEach((item)=>{
+
+    contenedor.innerHTML += `
+      <div class="
+        flex
+        justify-between
+        bg-gray-100
+        p-3
+        rounded-xl
+      ">
+
+        <span>
+          ${item.nombre}
+        </span>
+
+        <span class="font-bold">
+          $${item.precio}
+        </span>
+
+      </div>
+    `;
+
+  });
+
+  document.getElementById('total').innerText = total;
+
+}
+
+function enviarPedido(){
+
+  if(cuenta.length === 0){
+
+    alert('Agrega algo al pedido');
+
+    return;
+
+  }
+
+  const pedidos =
+  document.getElementById('pedidos');
+
+  let lista = '';
+
+  cuenta.forEach((item)=>{
+
+    lista += `
+      <li>
+        ${item.nombre} - $${item.precio}
+      </li>
+    `;
+
+  });
+
+  const pedido = document.createElement('div');
+
+  pedido.className =
+  'bg-white p-6 rounded-3xl shadow-xl border-l-8 border-cyan-600';
+
+  pedido.innerHTML = `
+
+    <div class="flex justify-between items-center">
+
+      <div>
+
+        <h3 class="text-3xl font-bold">
+          Turno #${turno}
+        </h3>
+
+        <ul class="mt-4 list-disc ml-6 text-lg">
+          ${lista}
+        </ul>
+
+        <p class="text-2xl font-bold text-green-700 mt-5">
+          Total: $${total}
+        </p>
+
+        <p class="mt-4 text-yellow-600 font-bold text-xl estado">
+          ⏳ Pendiente
+        </p>
+
+      </div>
+
+      <div class="space-y-3">
+
+        <button
+          onclick="preparando(this)"
+          class="bg-yellow-500 text-white px-5 py-3 rounded-2xl"
+        >
+          Preparando
+        </button>
+
+        <button
+          onclick="entregado(this)"
+          class="bg-green-600 text-white px-5 py-3 rounded-2xl"
+        >
+          Entregado
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+  pedidos.prepend(pedido);
+
+  alert(
+    '✅ Pedido enviado\\n\\nTurno #' + turno
+  );
+
+  turno++;
+
+  cuenta = [];
+  total = 0;
+
+  actualizarCuenta();
+
+}
+
+function preparando(btn){
+
+  const card = btn.closest('.border-l-8');
+
+  const estado =
+  card.querySelector('.estado');
+
+  estado.innerHTML =
+  '👨‍🍳 Preparando';
+
+  estado.className =
+  'mt-4 text-blue-600 font-bold text-xl estado';
+
+}
+
+function entregado(btn){
+
+  const card = btn.closest('.border-l-8');
+
+  const estado =
+  card.querySelector('.estado');
+
+  estado.innerHTML =
+  '✅ Entregado';
+
+  estado.className =
+  'mt-4 text-green-600 font-bold text-xl estado';
+
+}
+
+</script>
+
+</body>
+</html>
